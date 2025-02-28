@@ -37,6 +37,15 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""MOVEV"",
+                    ""type"": ""Button"",
+                    ""id"": ""faf67ba3-d030-4ba6-bf2e-46a52630fedc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""JUMP"",
                     ""type"": ""Button"",
                     ""id"": ""af8c273d-95cd-4437-b5fd-6f799aac9adf"",
@@ -167,6 +176,105 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""action"": ""JUMP"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""GAMEPAD"",
+                    ""id"": ""5ebbb0f0-98f0-4b25-881e-ed37693c807a"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MOVEV"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""b711966f-1733-4798-af37-cf22ff15eed6"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MOVEV"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""93e78a01-edce-4b99-9796-a71303931d0e"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MOVEV"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""WS"",
+                    ""id"": ""dd29ed38-9a4d-4ebf-b9a9-21bced8279e8"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MOVEV"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""9ec75242-c05d-421b-9fd8-f444305dada8"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MOVEV"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""90c72caa-b39b-4ccf-a941-bebd57cf2b9e"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MOVEV"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""ZS"",
+                    ""id"": ""84daad40-d893-4751-a4fc-72875765697d"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MOVEV"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""15d91793-09ec-4010-88d2-f9442f411d8a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MOVEV"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""5e06ce07-2c09-4093-8951-a6aed95d8111"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MOVEV"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -176,6 +284,7 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         // PLAYER
         m_PLAYER = asset.FindActionMap("PLAYER", throwIfNotFound: true);
         m_PLAYER_MOVEH = m_PLAYER.FindAction("MOVEH", throwIfNotFound: true);
+        m_PLAYER_MOVEV = m_PLAYER.FindAction("MOVEV", throwIfNotFound: true);
         m_PLAYER_JUMP = m_PLAYER.FindAction("JUMP", throwIfNotFound: true);
     }
 
@@ -239,12 +348,14 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PLAYER;
     private List<IPLAYERActions> m_PLAYERActionsCallbackInterfaces = new List<IPLAYERActions>();
     private readonly InputAction m_PLAYER_MOVEH;
+    private readonly InputAction m_PLAYER_MOVEV;
     private readonly InputAction m_PLAYER_JUMP;
     public struct PLAYERActions
     {
         private @PlayerMap m_Wrapper;
         public PLAYERActions(@PlayerMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @MOVEH => m_Wrapper.m_PLAYER_MOVEH;
+        public InputAction @MOVEV => m_Wrapper.m_PLAYER_MOVEV;
         public InputAction @JUMP => m_Wrapper.m_PLAYER_JUMP;
         public InputActionMap Get() { return m_Wrapper.m_PLAYER; }
         public void Enable() { Get().Enable(); }
@@ -258,6 +369,9 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @MOVEH.started += instance.OnMOVEH;
             @MOVEH.performed += instance.OnMOVEH;
             @MOVEH.canceled += instance.OnMOVEH;
+            @MOVEV.started += instance.OnMOVEV;
+            @MOVEV.performed += instance.OnMOVEV;
+            @MOVEV.canceled += instance.OnMOVEV;
             @JUMP.started += instance.OnJUMP;
             @JUMP.performed += instance.OnJUMP;
             @JUMP.canceled += instance.OnJUMP;
@@ -268,6 +382,9 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @MOVEH.started -= instance.OnMOVEH;
             @MOVEH.performed -= instance.OnMOVEH;
             @MOVEH.canceled -= instance.OnMOVEH;
+            @MOVEV.started -= instance.OnMOVEV;
+            @MOVEV.performed -= instance.OnMOVEV;
+            @MOVEV.canceled -= instance.OnMOVEV;
             @JUMP.started -= instance.OnJUMP;
             @JUMP.performed -= instance.OnJUMP;
             @JUMP.canceled -= instance.OnJUMP;
@@ -291,6 +408,7 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
     public interface IPLAYERActions
     {
         void OnMOVEH(InputAction.CallbackContext context);
+        void OnMOVEV(InputAction.CallbackContext context);
         void OnJUMP(InputAction.CallbackContext context);
     }
 }
