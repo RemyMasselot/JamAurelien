@@ -433,7 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_splineContainer: {fileID: 153139759}
   m_splineIndex: 0
-  m_time: 0.157
+  m_time: 0
   m_width: 5
 --- !u!114 &153139762
 MonoBehaviour:
@@ -7021,7 +7021,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   percentText: {fileID: 914832742}
-  Ring: {fileID: 948844502}
+  ring: {fileID: 948844502}
+  splineSampler: {fileID: 0}
+  sliderPos: 0
 --- !u!43 &1048769777
 Mesh:
   m_ObjectHideFlags: 0
