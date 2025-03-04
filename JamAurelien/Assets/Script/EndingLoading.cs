@@ -25,6 +25,8 @@ public class EndingLoading : MonoBehaviour
             
             Vector3 worldJumpDirection = transform.TransformDirection(jumpDir);
             rb.AddForce(worldJumpDirection * jumpForce, ForceMode.Impulse);
+
+            followSpline.UpdateAnim("Jump");
         }
 
         if (other.CompareTag("End") == true)

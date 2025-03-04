@@ -13,8 +13,15 @@ public class FollowSpline : MonoBehaviour
     public float maxLateralOffset = 2f; // Limite du déplacement latéral
 
     private float t = 0f; // Position sur la spline (0 = début, 1 = fin)
+    
+    [SerializeField] private AnimationCurve accelerationCurve;
+    [SerializeField] private float accelerationTime = 1f; // Temps pour atteindre la vitesse max
+    private float accelerationProgress = 0f; // Avancement de l'accélération
+
     private float lateralOffset = 0f; // Décalage latéral du joueur
     private Vector3 previousPosition; // Stocke la position précédente pour calculer la direction réelle
+
+    [SerializeField] private Animator animator;
 
     void Start()
     {
@@ -29,6 +36,18 @@ public class FollowSpline : MonoBehaviour
         }
     }
 
+    public void UpdateAnim(string animName)
+    {
+        foreach (var param in animator.parameters)
+        {
+            if (param.type == AnimatorControllerParameterType.Bool)
+            {
+                animator.SetBool(param.name, false);
+            }
+        }
+        animator.SetBool(animName, true);
+    }
+
     private void FollowTheSpline()
     {
         if (splineContainer == null) return;
@@ -37,11 +56,21 @@ public class FollowSpline : MonoBehaviour
         float moveValueH = setInput.MoveH.ReadValue<float>();
         float moveValueV = setInput.MoveV.ReadValue<float>();
 
-        //float moveInput = Input.GetAxis("Vertical"); // Avancer/reculer (Z/S ou joystick)
-        //float lateralInput = Input.GetAxis("Horizontal"); // Déplacement latéral (Q/D ou joystick)
+        if (moveValueH > 0)
+        {
+            UpdateAnim("Right");
+        }
+        if (moveValueH == 0)
+        {
+            UpdateAnim("Middle");
+        }
+        if (moveValueH < 0)
+        {
+            UpdateAnim("Left");
+        }
 
         // Modifier la vitesse en fonction de l'input vertical
-        float currentSpeed = baseSpeed + moveValueV * baseSpeed * 0.5f;
+        float currentSpeed = baseSpeed /*+ moveValueV*/ * baseSpeed * 0.5f;
 
         // Avancer sur la spline
         t += currentSpeed * Time.deltaTime;
@@ -65,7 +94,13 @@ public class FollowSpline : MonoBehaviour
         Vector3 right = Vector3.Cross(upVector, tangent).normalized;
 
         // Appliquer le déplacement latéral avec une limite
-        lateralOffset += moveValueH * lateralMoveSpeed * Time.deltaTime;
+        accelerationProgress += Time.deltaTime / accelerationTime;
+        accelerationProgress = Mathf.Clamp01(accelerationProgress); // Clamp entre 0 et 1
+
+        float accelerationFactor = accelerationCurve.Evaluate(accelerationProgress);
+        lateralOffset += moveValueH * lateralMoveSpeed * accelerationFactor * Time.deltaTime;
+
+        //lateralOffset += moveValueH * lateralMoveSpeed * Time.deltaTime;
         lateralOffset = Mathf.Clamp(lateralOffset, -maxLateralOffset, maxLateralOffset);
 
         // Calculer la position finale
