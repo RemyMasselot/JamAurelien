@@ -1,46 +1,41 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Splines;
 
 public class FollowSpline : MonoBehaviour
 {
-    // INPUT ACTIONS
-    [Space(10)]
-    [Header("INPUT ACTIONS")]
-    private PlayerMap playerMap;
-    public InputAction MoveH;
-    public InputAction MoveV;
-    public InputAction Jump;
-    [Space(10)]
+    [SerializeField] private SetInput setInput;
+
+    public bool CanFollowSpline = true;
     public SplineContainer splineContainer; // Référence à la spline
     public float baseSpeed = 1f; // Vitesse de déplacement sur la spline
     public bool loop = false; // Boucle ou pas
     public float lateralMoveSpeed = 2f; // Vitesse de déplacement latéral
     public float maxLateralOffset = 2f; // Limite du déplacement latéral
-    [Space(10)]
+
     private float t = 0f; // Position sur la spline (0 = début, 1 = fin)
     private float lateralOffset = 0f; // Décalage latéral du joueur
     private Vector3 previousPosition; // Stocke la position précédente pour calculer la direction réelle
 
     void Start()
     {
-        // Set input actions
-        playerMap = new PlayerMap();
-        playerMap.Enable();
-        MoveH = playerMap.PLAYER.MOVEH;
-        MoveV = playerMap.PLAYER.MOVEV;
-        Jump = playerMap.PLAYER.JUMP;
-
         previousPosition = transform.position;
     }
 
     void Update()
     {
+        if (CanFollowSpline == true)
+        {
+            FollowTheSpline();
+        }
+    }
+
+    private void FollowTheSpline()
+    {
         if (splineContainer == null) return;
 
         // Contrôle du joueur
-        float moveValueH = MoveH.ReadValue<float>();
-        float moveValueV = MoveV.ReadValue<float>();
+        float moveValueH = setInput.MoveH.ReadValue<float>();
+        float moveValueV = setInput.MoveV.ReadValue<float>();
 
         //float moveInput = Input.GetAxis("Vertical"); // Avancer/reculer (Z/S ou joystick)
         //float lateralInput = Input.GetAxis("Horizontal"); // Déplacement latéral (Q/D ou joystick)

@@ -2,23 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Splines;
 using UnityEngine.UI;
 
 public class Loading : MonoBehaviour
 {
     private Slider slider;
     [SerializeField] private TextMeshProUGUI percentText;
+    [SerializeField] private RingSpawner ringSpawner;
 
-    [SerializeField] private GameObject ring;
-    [SerializeField] private SplineSampler splineSampler;
-    [SerializeField, Range(0f, 1f)] private float sliderPos = 0f;
+    
 
     void Start()
     {
         slider = transform.GetComponent<Slider>();
         slider.value = 0;
         percentText.text = (int)(slider.value) + " %";
+        StartCoroutine(AddPercentStarting());
+    }
+
+    IEnumerator AddPercentStarting()
+    {
+        yield return new WaitForSeconds(2);
         StartCoroutine(AddPercentPart1());
     }
 
@@ -50,18 +54,13 @@ public class Loading : MonoBehaviour
 
             if (slider.value >= 100)
             {
-                SpawnRing();
+                ringSpawner.SpawnRing();
+                //Debug.Log("FINISH");
             }
             else
             {
                 yield return new WaitForSeconds(_delay);
             }
         }
-    }
-
-    private void SpawnRing()
-    {
-        //sliderPos = splineSampler.EvaluatePosition(splineSampler.m_time, out Vector3 position);
-        ring.gameObject.SetActive(true);
     }
 }
