@@ -14,7 +14,7 @@ public class RingSpawner : MonoBehaviour
     public void SpawnRing()
     {
         ring.gameObject.transform.position = GetRingPosOnSpline() + ringOffset;
-        Vector3 rot = new Vector3(GetRingRotOnSpline().x, GetRingRotOnSpline().y + 90, GetRingRotOnSpline().z);
+        Vector3 rot = new Vector3(GetRingRotOnSpline().x+30, GetRingRotOnSpline().y + 90, GetRingRotOnSpline().z);
         Quaternion rotation = Quaternion.LookRotation(rot);
         ring.gameObject.transform.rotation = rotation;
 
