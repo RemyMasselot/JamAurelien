@@ -8,8 +8,8 @@ public class EndingLoading : MonoBehaviour
 {
     private Rigidbody rb;
     private FollowSpline followSpline;
-    [SerializeField] private Vector3 jumpDir;
     [SerializeField] private float jumpForce;
+    [SerializeField] private Transform jumpTarget;
 
 
     private void Start()
@@ -23,7 +23,7 @@ public class EndingLoading : MonoBehaviour
         {
             followSpline.CanFollowSpline = false;
             
-            Vector3 worldJumpDirection = transform.TransformDirection(jumpDir);
+            Vector3 worldJumpDirection = (jumpTarget.position - transform.position).normalized;
             rb.AddForce(worldJumpDirection * jumpForce, ForceMode.Impulse);
 
             followSpline.UpdateAnim("Jump");

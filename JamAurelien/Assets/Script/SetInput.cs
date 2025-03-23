@@ -14,6 +14,8 @@ public class SetInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
+
         // Set input actions
         playerMap = new PlayerMap();
         playerMap.Enable();

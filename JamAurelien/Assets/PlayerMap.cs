@@ -290,7 +290,7 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""id"": ""01da741b-7080-4b9f-8864-db35c4ab0062"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
-                    ""processors"": ""InvertVector2(invertX=false,invertY=false),ScaleVector2(x=0.5,y=0.5)"",
+                    ""processors"": ""InvertVector2(invertX=false,invertY=false),ScaleVector2(x=0.2,y=0.2)"",
                     ""groups"": """",
                     ""action"": ""LOOK"",
                     ""isComposite"": false,
