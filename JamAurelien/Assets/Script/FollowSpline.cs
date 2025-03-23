@@ -58,7 +58,7 @@ public class FollowSpline : MonoBehaviour
 
         if (moveValueH > 0)
         {
-            UpdateAnim("Right");
+            //UpdateAnim("Right");
         }
         if (moveValueH == 0)
         {
@@ -66,7 +66,7 @@ public class FollowSpline : MonoBehaviour
         }
         if (moveValueH < 0)
         {
-            UpdateAnim("Left");
+            //UpdateAnim("Left");
         }
 
         // Modifier la vitesse en fonction de l'input vertical
