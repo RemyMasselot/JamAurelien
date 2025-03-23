@@ -10,6 +10,8 @@ public class SetInput : MonoBehaviour
     public InputAction MoveV;
     public InputAction Jump;
     public InputAction Look;
+    public InputAction Back;
+    public InputAction _Start;
 
     // Start is called before the first frame update
     void Start()
@@ -23,5 +25,7 @@ public class SetInput : MonoBehaviour
         MoveV = playerMap.PLAYER.MOVEV;
         Jump = playerMap.PLAYER.JUMP;
         Look = playerMap.PLAYER.LOOK;
+        Back = playerMap.PLAYER.BACK;
+        _Start = playerMap.PLAYER.START;
     }
 }

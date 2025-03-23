@@ -62,6 +62,24 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""BACK"",
+                    ""type"": ""Button"",
+                    ""id"": ""94cdad66-bb68-43e9-b52f-6aebeed4fdde"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""START"",
+                    ""type"": ""Button"",
+                    ""id"": ""fb9cabed-7ff4-41dc-9e7b-8670d2a666fa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -306,6 +324,50 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""action"": ""LOOK"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""689cbd5d-fba7-46cc-b94e-bd2666f17651"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BACK"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7042540-9456-4153-acf1-2102f4b73625"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BACK"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec6d42e3-de37-4193-b978-0889a254ca28"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""START"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90d12776-e864-4dd5-a158-7d586045365f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""START"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -318,6 +380,8 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         m_PLAYER_MOVEV = m_PLAYER.FindAction("MOVEV", throwIfNotFound: true);
         m_PLAYER_JUMP = m_PLAYER.FindAction("JUMP", throwIfNotFound: true);
         m_PLAYER_LOOK = m_PLAYER.FindAction("LOOK", throwIfNotFound: true);
+        m_PLAYER_BACK = m_PLAYER.FindAction("BACK", throwIfNotFound: true);
+        m_PLAYER_START = m_PLAYER.FindAction("START", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -383,6 +447,8 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_PLAYER_MOVEV;
     private readonly InputAction m_PLAYER_JUMP;
     private readonly InputAction m_PLAYER_LOOK;
+    private readonly InputAction m_PLAYER_BACK;
+    private readonly InputAction m_PLAYER_START;
     public struct PLAYERActions
     {
         private @PlayerMap m_Wrapper;
@@ -391,6 +457,8 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         public InputAction @MOVEV => m_Wrapper.m_PLAYER_MOVEV;
         public InputAction @JUMP => m_Wrapper.m_PLAYER_JUMP;
         public InputAction @LOOK => m_Wrapper.m_PLAYER_LOOK;
+        public InputAction @BACK => m_Wrapper.m_PLAYER_BACK;
+        public InputAction @START => m_Wrapper.m_PLAYER_START;
         public InputActionMap Get() { return m_Wrapper.m_PLAYER; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -412,6 +480,12 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @LOOK.started += instance.OnLOOK;
             @LOOK.performed += instance.OnLOOK;
             @LOOK.canceled += instance.OnLOOK;
+            @BACK.started += instance.OnBACK;
+            @BACK.performed += instance.OnBACK;
+            @BACK.canceled += instance.OnBACK;
+            @START.started += instance.OnSTART;
+            @START.performed += instance.OnSTART;
+            @START.canceled += instance.OnSTART;
         }
 
         private void UnregisterCallbacks(IPLAYERActions instance)
@@ -428,6 +502,12 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @LOOK.started -= instance.OnLOOK;
             @LOOK.performed -= instance.OnLOOK;
             @LOOK.canceled -= instance.OnLOOK;
+            @BACK.started -= instance.OnBACK;
+            @BACK.performed -= instance.OnBACK;
+            @BACK.canceled -= instance.OnBACK;
+            @START.started -= instance.OnSTART;
+            @START.performed -= instance.OnSTART;
+            @START.canceled -= instance.OnSTART;
         }
 
         public void RemoveCallbacks(IPLAYERActions instance)
@@ -451,5 +531,7 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         void OnMOVEV(InputAction.CallbackContext context);
         void OnJUMP(InputAction.CallbackContext context);
         void OnLOOK(InputAction.CallbackContext context);
+        void OnBACK(InputAction.CallbackContext context);
+        void OnSTART(InputAction.CallbackContext context);
     }
 }

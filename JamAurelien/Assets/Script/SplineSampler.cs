@@ -30,8 +30,8 @@ public class SplineSampler : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Handles.matrix = transform.localToWorldMatrix;
-        Handles.SphereHandleCap(0, position, Quaternion.identity, 1f, EventType.Repaint);
+        //Handles.matrix = transform.localToWorldMatrix;
+        //Handles.SphereHandleCap(0, position, Quaternion.identity, 1f, EventType.Repaint);
     }
 
     public void SampleSplineWidth(float t, Vector3 p1, Vector3 p2)
