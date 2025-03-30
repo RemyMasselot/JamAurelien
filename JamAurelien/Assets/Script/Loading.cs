@@ -32,7 +32,7 @@ public class Loading : MonoBehaviour
         {
             slider.value += Random.Range(10, 20);
             percentText.text = (int)(slider.value) + " %";
-            float _delay = Random.Range(0.1f, 0.4f); ;
+            float _delay = Random.Range(0.1f, 0.8f); ;
             
             if (slider.value >= 60)
             {
@@ -48,9 +48,9 @@ public class Loading : MonoBehaviour
     {
         while (slider.value < 100)
         {
-            slider.value += Random.Range(5, 10);
+            slider.value += Random.Range(7, 10);
             percentText.text = (int)(slider.value) + " %";
-            float _delay = Random.Range(1, 3); ;
+            float _delay = Random.Range(1.5f, 2f); ;
 
             if (slider.value >= 100)
             {

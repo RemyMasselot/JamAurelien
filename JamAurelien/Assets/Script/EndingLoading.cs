@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Splines;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class EndingLoading : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class EndingLoading : MonoBehaviour
     private FollowSpline followSpline;
     [SerializeField] private float jumpForce;
     [SerializeField] private Transform jumpTarget;
+    [SerializeField] private RawImage fade;
 
 
     private void Start()
@@ -31,7 +33,10 @@ public class EndingLoading : MonoBehaviour
 
         if (other.CompareTag("End") == true)
         {
-            SceneManager.LoadScene("Level1");
+            fade.DOFade(1, 0.5f).OnComplete(() =>
+            {
+                SceneManager.LoadScene("Level1");
+            });
         }
     }
 }

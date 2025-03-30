@@ -18,7 +18,7 @@ public class MoveCollectible : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Instantiate(prefab, transform.position, Quaternion.identity);
+            Instantiate(prefab, transform.position, Quaternion.Euler(0,0,0));
             Destroy(this.gameObject);
         }
     }

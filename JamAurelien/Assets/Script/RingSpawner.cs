@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
 using System.Linq;
+using DG.Tweening;
 
 public class RingSpawner : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class RingSpawner : MonoBehaviour
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private int knotDistance = 2;
     [SerializeField] private Vector3 ringOffset;
+    [SerializeField] private float punchForce;
+    [SerializeField] private List<GameObject> donuts;
 
     public void SpawnRing()
     {
@@ -19,6 +22,18 @@ public class RingSpawner : MonoBehaviour
         ring.gameObject.transform.rotation = rotation;
 
         ring.gameObject.SetActive(true);
+        DonutsBump(0);
+    }
+    void DonutsBump(int currentIteration)
+    {
+        if (currentIteration >= donuts.Count) return;
+
+        DOVirtual.DelayedCall(0.07f, () =>
+        {
+            donuts[currentIteration].gameObject.SetActive(true);
+            donuts[currentIteration].transform.DOPunchScale(Vector3.one * punchForce, 0.5f);
+            DonutsBump(currentIteration + 1);
+        });
     }
 
     Vector3 GetRingPosOnSpline()
